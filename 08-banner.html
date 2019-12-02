@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>轮播图</title>
+		<style type="text/css">
+			div {
+				width: 500px;
+				height: 400px;
+				border: 1px red solid;
+				text-align: center;
+				margin: 0 auto;
+			}
+		</style>
+	</head>
+	<body>
+		<div>
+			<h3>图片轮播中...</h3>
+			<img width="100%" height="340" src="img/img01.jpg" alt="" />
+		</div>
+	</body>
+	<script type="text/javascript">
+		//获取图片
+		var img = document.getElementsByTagName("img")[0];
+		/*
+		 	通过循环定时器，定时修改图片的src属性
+		 */
+		var index = 1;
+		setInterval(function() {
+			index++;
+			img.src = "img/img0" + index + ".jpg";
+			if (index == 4) {
+				index = 0;
+			}
+		}, 2000);
+	</script>
+</html>

@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		<form action="" method="get">
+			<input type="text" name="username" placeholder="请输入用户名，6~15位" />
+			<span id="userInfo"></span><br />
+			<input type="text" name="phone" placeholder="请输入电话号码" />
+			<span id="phoneInfo"></span><br />
+			<input type="password" name="pwd" placeholder="请输入密码" />
+			<span id="pwdInfo"></span><br />
+			<input type="password" name="cpwd" placeholder="请再次输入密码" />
+			<span id="cpwdInfo"></span><br />
+			<input type="button" value="提交表单数据" id="btn" />
+		</form>
+	</body>
+	<script type="text/javascript">
+		
+		//封装一个错误、正确的方法
+		function mistake(ele, info) {
+			ele.innerText = info;
+			ele.style.color = "red";
+		}
+		
+		function correct(ele, info) {
+			ele.innerText = info;
+			ele.style.color = "green";
+		}
+		//定义四个布尔值，来保存校验是否成功
+		var isUserSucc = false, isPhoneSucc = false, isPwdSucc = false, isCpwdSucc = false;
+		//用户名的非空及长度校验
+		var userInput = document.getElementsByName("username")[0];
+		var userInfo = document.getElementById("userInfo");
+		userInput.onblur = function() {
+			//拿到输入框中的值
+			var username = this.value;
+			if (username == null || username == "") {
+				mistake(userInfo, "用户名不能为空");
+			} else if (username.length < 6 || username.length > 15) {
+				mistake(userInfo, "用户名长度为6~15");
+			} else {
+				correct(userInfo, "用户名OK");
+				isUserSucc = true;
+			}
+		}
+		
+		//电话号码的非空、正则校验
+		var phoneInput = document.getElementsByName("phone")[0];
+		var phoneInfo = document.getElementById("phoneInfo");
+		phoneInput.onblur = function() {
+			//拿到输入框中的值
+			var phone = this.value;
+			if (phone == null || phone == "") {
+				mistake(phoneInfo, "电话号码不能为空");
+			} else if (!(/^1[3456789]\d{9}$/.test(phone))) {
+				mistake(phoneInfo, "手机号码格式不正确");
+			} else {
+				correct(phoneInfo, "手机号码OK");
+				isPhoneSucc = true;
+			}
+		}
+		
+		//密码的非空校验
+		var pwdInput = document.getElementsByName("pwd")[0];
+		var pwdInfo = document.getElementById("pwdInfo");
+		pwdInput.onblur = function() {
+			//拿到输入框中的值
+			var pwd = this.value;
+			if (pwd == null || pwd == "") {
+				mistake(pwdInfo, "密码不能为空");
+			} else {
+				correct(pwdInfo, "密码OK");
+				isPwdSucc = true;
+			}
+		}
+		
+		//确认密码的非空、一致校验
+		var cpwdInput = document.getElementsByName("cpwd")[0];
+		var cpwdInfo = document.getElementById("cpwdInfo");
+		cpwdInput.onblur = function() {
+			//拿到输入框中的值
+			var pwd = pwdInput.value;//密码
+			var cpwd = this.value;//确认密码
+			if (cpwd == null || cpwd == "") {
+				mistake(cpwdInfo, "密码不能为空");
+			} else if (pwd != cpwd) {
+				mistake(cpwdInfo, "两次密码不一致");
+			} else {
+				correct(cpwdInfo, "密码OK");
+				isCpwdSucc = true;
+			}
+		}
+		
+		//获取提交按钮
+		var btn = document.getElementById("btn");
+		btn.onclick = function() {
+			//所有校验通过之后，提交表单，只要有一个不满足校验，就提示错误
+			if (isUserSucc && isPhoneSucc && isPwdSucc && isCpwdSucc) {
+				var form = document.getElementsByTagName("form")[0];
+				form.submit();
+			} else {
+				alert("校验还未通过，请先输入正确的信息");
+			}
+		}
+	</script>
+</html>
