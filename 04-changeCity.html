@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>省市联动</title>
+	</head>
+	<body>
+		<select name="pro" id="pro">
+			<option value="">---请选择---</option>
+		</select>
+		<select name="city" id="city">
+			<option value="">---请选择---</option>
+		</select>
+	</body>
+	<script type="text/javascript" src="js/jquery-3.1.1.js"></script>
+	<script type="text/javascript">
+		/*
+		 	定义省份的数组、定义市区的二维数组
+		 	现在的值只能给定死值
+		 	但是后期真正的省市联动，省市数据是从后台数据库中得到的
+		 */
+		var pros = ["河北省", "河南省", "山西省", "福建省", "山东省"];
+		var citys = [
+			["石家庄", "保定", "邯郸", "唐山", "秦皇岛"],
+			["洛阳", "南阳", "信阳", "濮阳", "安阳"],
+			["大同", "临汾", "太原", "阳泉", "运城"],
+			["福州", "厦门", "武夷山", "三明", "泉州"],
+			["济南", "青岛", "淄博", "滨州", "德州"]
+		];
+		//遍历省份数组，填充省份的下拉选择框
+		$(pros).each(function(index, ele) {
+			$("#pro").append($("<option value='" + index + "'>" + ele + "</option>"));
+		})
+		
+		/*
+		 	在省份的值改变事件中取到当前点击省份的绑定的value下标值
+		 	通过下标找到对应的市区数组
+		 	遍历市区数组，填充市区的下拉选择框
+		 */
+		$("#pro").change(function() {
+			//先清空之前的市区信息
+			$("#city option").remove(":gt(0)");
+			//这个cs就是市区数组
+			var cs = citys[$(this).val()];
+			$(cs).each(function(index, ele) {
+				$("#city").append($("<option value='" + index + "'>" + ele + "</option>"));
+			})
+		})
+	</script>
+</html>
